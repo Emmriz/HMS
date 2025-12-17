@@ -21,6 +21,7 @@ public function run(): void
         AdminUserSeeder::class,
         StaffSeeder::class,
         PatientSeeder::class,
+        AppointmentSeeder::class,
     ]);
 }
 

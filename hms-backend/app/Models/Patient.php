@@ -21,4 +21,9 @@ class Patient extends Model
         'blood_group',
         'is_active',
     ];
+
+    public function contacts()
+    {
+        return $this->hasMany(PatientContact::class);
+    }
 }
