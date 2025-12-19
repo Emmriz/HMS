@@ -22,8 +22,20 @@ class Patient extends Model
         'is_active',
     ];
 
-    public function contacts()
-    {
-        return $this->hasMany(PatientContact::class);
-    }
+public function contacts()
+{
+    return $this->hasMany(PatientContact::class);
+}
+
+public function medicalHistories()
+{
+    return $this->hasMany(PatientMedicalHistory::class);
+}
+
+public function admissions()
+{
+    return $this->hasMany(Admission::class);
+}
+
+
 }
