@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use COM;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -27,6 +28,8 @@ public function run(): void
         WardSeeder::class,
         BedSeeder::class,
         AdmissionSeeder::class,
+        ConsultationSeeder::class,
+        VitalSeeder::class,
     ]);
 }
 
