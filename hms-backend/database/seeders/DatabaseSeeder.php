@@ -30,6 +30,8 @@ public function run(): void
         AdmissionSeeder::class,
         ConsultationSeeder::class,
         VitalSeeder::class,
+        DiagnosisSeeder::class,
+        TreatmentPlanSeeder::class,
     ]);
 }
 
