@@ -10,18 +10,25 @@ class Consultation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'appointment_id',
+        'patient_id',
         'staff_id',
         'notes',
+        'consultation_date',
     ];
 
-    public function appointment()
+    public function patient()
     {
-        return $this->belongsTo(Appointment::class);
+        return $this->belongsTo(Patient::class);
     }
 
     public function staff()
     {
         return $this->belongsTo(Staff::class);
     }
+
+    public function treatmentPlans()
+    {
+        return $this->hasMany(TreatmentPlan::class);
+    }
 }
+

@@ -32,6 +32,11 @@ public function run(): void
         VitalSeeder::class,
         DiagnosisSeeder::class,
         TreatmentPlanSeeder::class,
+        DrugCategorySeeder::class,
+        DrugSeeder::class,
+        PharmacyStockSeeder::class,
+        PrescriptionSeeder::class,
+
     ]);
 }
 

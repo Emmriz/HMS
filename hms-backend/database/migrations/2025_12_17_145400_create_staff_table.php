@@ -12,29 +12,21 @@ return new class extends Migration
     public function up(): void
 {
     Schema::create('staff', function (Blueprint $table) {
-        $table->id();
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->foreignId('department_id')->constrained()->cascadeOnDelete();
+    $table->string('staff_number');
+    $table->string('first_name');
+    $table->string('last_name');
+    $table->string('phone');
+    $table->string('gender');
+    $table->date('date_of_birth');
+    $table->string('employment_type');
+    $table->string('role'); // NEW COLUMN
+    $table->boolean('is_active')->default(true);
+    $table->timestamps();
+});
 
-        $table->foreignId('user_id')
-            ->constrained()
-            ->cascadeOnDelete();
-
-        $table->foreignId('department_id')
-            ->constrained()
-            ->restrictOnDelete();
-
-        $table->string('staff_number')->unique();
-        $table->string('first_name');
-        $table->string('last_name');
-        $table->string('phone')->nullable();
-
-        $table->enum('gender', ['male', 'female', 'other']);
-        $table->date('date_of_birth')->nullable();
-
-        $table->enum('employment_type', ['full_time', 'contract', 'intern']);
-        $table->boolean('is_active')->default(true);
-
-        $table->timestamps();
-    });
 }
 
 

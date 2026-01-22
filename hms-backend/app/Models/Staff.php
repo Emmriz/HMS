@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+use Spatie\Permission\Traits\HasRoles;
+
 class Staff extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
 
     protected $fillable = [
         'user_id',
@@ -19,20 +22,15 @@ class Staff extends Model
         'gender',
         'date_of_birth',
         'employment_type',
+        'role',
         'is_active',
     ];
 
-    /**
-     * Staff belongs to a department.
-     */
     public function department()
     {
         return $this->belongsTo(Department::class);
     }
 
-    /**
-     * Staff belongs to a user account.
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
