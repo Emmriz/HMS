@@ -36,6 +36,10 @@ public function run(): void
         DrugSeeder::class,
         PharmacyStockSeeder::class,
         PrescriptionSeeder::class,
+        LabTestCategorySeeder::class,
+        LabTestSeeder::class,
+        LabResultSeeder::class,
+        LabRequestSeeder::class,
 
     ]);
 }
