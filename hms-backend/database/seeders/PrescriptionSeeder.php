@@ -12,11 +12,61 @@ use App\Models\TreatmentPlan;
 
 class PrescriptionSeeder extends Seeder
 {
-    public function run(): void
+//     public function run(): void
+// {
+//     $doctors = \App\Models\Staff::where('role', 'doctor')->get();
+//     $drugs = \App\Models\Drug::all();
+//     $treatmentPlans = \App\Models\TreatmentPlan::with('consultation.patient')->get();
+
+//     if ($doctors->isEmpty() || $drugs->isEmpty() || $treatmentPlans->isEmpty()) {
+//         $this->command->info('Missing doctors, drugs, or treatment plans.');
+//         return;
+//     }
+
+//     foreach ($treatmentPlans as $plan) {
+
+//         // Safety checks
+//         if (!$plan->consultation || !$plan->consultation->patient) {
+//             continue;
+//         }
+
+//         $patient = $plan->consultation->patient;
+//         $doctor = $doctors->first(); // you have 1 doctor
+
+//         $prescription = \App\Models\Prescription::firstOrCreate(
+//             [
+//                 'treatment_plan_id' => $plan->id,
+//             ],
+//             [
+//                 'patient_id' => $patient->id,
+//                 'doctor_id' => $doctor->id,
+//                 'notes' => 'Take medications exactly as prescribed.',
+//             ]
+//         );
+
+//         foreach ($drugs->random(2) as $drug) {
+//             \App\Models\PrescriptionItem::firstOrCreate(
+//                 [
+//                     'prescription_id' => $prescription->id,
+//                     'drug_id' => $drug->id,
+//                 ],
+//                 [
+//                     'dosage' => '500mg',
+//                     'frequency' => '2 times daily',
+//                     'duration' => 5,
+//                 ]
+//             );
+//         }
+//     }
+
+//     $this->command->info('Prescriptions seeded successfully.');
+// }
+
+public function run(): void
 {
-    $doctors = \App\Models\Staff::where('role', 'doctor')->get();
-    $drugs = \App\Models\Drug::all();
-    $treatmentPlans = \App\Models\TreatmentPlan::with('consultation.patient')->get();
+    $doctors = Staff::where('role', 'doctor')->get();
+    $drugs = Drug::all();
+    $treatmentPlans = TreatmentPlan::with('consultation.appointment.patient')->get();
 
     if ($doctors->isEmpty() || $drugs->isEmpty() || $treatmentPlans->isEmpty()) {
         $this->command->info('Missing doctors, drugs, or treatment plans.');
@@ -25,15 +75,17 @@ class PrescriptionSeeder extends Seeder
 
     foreach ($treatmentPlans as $plan) {
 
-        // Safety checks
-        if (!$plan->consultation || !$plan->consultation->patient) {
+        $consultation = $plan->consultation;
+        $appointment  = $consultation?->appointment;
+        $patient      = $appointment?->patient;
+
+        if (!$consultation || !$appointment || !$patient) {
             continue;
         }
 
-        $patient = $plan->consultation->patient;
         $doctor = $doctors->first(); // you have 1 doctor
 
-        $prescription = \App\Models\Prescription::firstOrCreate(
+        $prescription = Prescription::firstOrCreate(
             [
                 'treatment_plan_id' => $plan->id,
             ],
@@ -45,7 +97,7 @@ class PrescriptionSeeder extends Seeder
         );
 
         foreach ($drugs->random(2) as $drug) {
-            \App\Models\PrescriptionItem::firstOrCreate(
+            PrescriptionItem::firstOrCreate(
                 [
                     'prescription_id' => $prescription->id,
                     'drug_id' => $drug->id,
@@ -61,6 +113,5 @@ class PrescriptionSeeder extends Seeder
 
     $this->command->info('Prescriptions seeded successfully.');
 }
-
 
 }

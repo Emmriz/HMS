@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Appointment;
 
 class Consultation extends Model
 {
@@ -30,5 +31,9 @@ class Consultation extends Model
     {
         return $this->hasMany(TreatmentPlan::class);
     }
+    public function appointment()
+{
+    return $this->belongsTo(Appointment::class);
+}
 }
 
