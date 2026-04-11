@@ -26,4 +26,8 @@ class Appointment extends Model
     {
         return $this->belongsTo(Staff::class);
     }
+    public function labRequests()
+    {
+        return $this->hasMany(\App\Models\LabRequest::class);
+    }
 }

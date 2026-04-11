@@ -37,5 +37,26 @@ public function admissions()
     return $this->hasMany(Admission::class);
 }
 
+public function treatmentPlans()
+{
+    return $this->hasManyThrough(
+        TreatmentPlan::class,
+        Consultation::class,
+        'patient_id',      // Foreign key on consultations table
+        'consultation_id', // Foreign key on treatment_plans table
+        'id',              // Local key on patients table
+        'id'               // Local key on consultations table
+    );
+}
+
+public function prescriptions()
+{
+    return $this->hasMany(Prescription::class);
+}
+
+public function appointments()
+{
+    return $this->hasMany(Appointment::class);
+}
 
 }
